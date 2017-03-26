@@ -12,7 +12,7 @@
             <h2>&nbsp;&nbsp;Your Books:</h2>
     		<br><br>
                 {% for book in books %}
-                <div class="col-md-3">
+                <div class="col-sm-3 col-md-3">
                 	<center>
 	                    <div class="thumbnail">
 	                        <a href="{% url 'books:detail' book.id %}">
