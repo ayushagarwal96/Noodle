@@ -43,7 +43,7 @@
 					</li>
 				</ul>
 
-				<form class="navbar-form navbar-center" role="search" method="get" action="{% url 'books:index' %}">
+				<form class="navbar-form navbar-left" role="search" method="get" action="{% url 'books:index' %}">
                 <div class="form-group">
                     <input type="text" placeholder="Search by Title, Author" class="form-control" name="q" value="{{ request.GET.q }}">
                 </div>

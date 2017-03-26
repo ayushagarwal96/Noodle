@@ -14,13 +14,6 @@ ul.errorlist > li {
     border-radius: 0;
 }
 
-.navbar-center
-{
-    text-align: center;
-	position: absolute;
-	left: calc( 50% - 142.5px )
-}
-
 .navbar-brand {
     font-family: 'Satisfy', cursive;
 }
