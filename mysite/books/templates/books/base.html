@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<title>{% block title %}Noodle{% endblock %}</title>
+	<!-- Loads the path to your static files -->
+	{% load staticfiles %}
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Satisfy" rel='stylesheet' type="text/css" />
+
+	<link rel="stylesheet" type="text/css" href="{% static 'books/style.css' %}" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+
+			<!-- Header -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'books:index' %}">Noodle</a>
+			</div>
+
+
+			<!-- Items -->
+			<div class="collapse navbar-collapse" id="topNavBar">
+				<ul class='nav navbar-nav'>
+					<li class="">
+						<a href="{% url 'books:index' %}">
+							<span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;My Books
+						</a>
+					</li>
+				</ul>
+
+				<form class="navbar-form navbar-center" role="search" method="get" action="{% url 'books:index' %}">
+                <div class="form-group">
+                    <input type="text" placeholder="Search by Title, Author" class="form-control" name="q" value="{{ request.GET.q }}">
+                </div>
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            	</form>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li class="">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<u>{{ request.user.username }}</u><span class="caret"></span></a>
+				        <ul class="dropdown-menu">
+				          <li><a href="{% url 'books:update_user' %}">Edit Profile</a></li>
+				        </ul>
+					</li>
+					<li class="">
+						<a href="{% url 'books:create_book' %}">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Book
+						</a>
+					</li>
+					<li class="">
+						<a href="{% url 'books:logout_user' %}">
+							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
+						</a>
+					</li>
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+{% block body %}
+{% endblock %}
+</body>
+</html>

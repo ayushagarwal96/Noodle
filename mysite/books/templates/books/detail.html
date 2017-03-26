@@ -1,0 +1,79 @@
+{% extends 'books/base.html' %}
+{% block title %}{{ book }}{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <div class="col-sm-3 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'books:detail' book.id %}">
+                        {% if book.cover %}
+                            <img src="{{ book.cover.url }}" class="img-responsive center-block" style="max-height:440px">
+                        {% else %}
+                            <h3>No image to display</h3>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+            <div class="col-sm-3 col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Details of the book:</h3><br>
+                        <b>Title: &nbsp;</b>{{ book.title }}<br>
+                        <b>Author: &nbsp;</b>{{ book.author }}<br>
+                        <b>Publisher: &nbsp;</b>{{ book.publisher }}<br>
+                        <b>Edition: &nbsp;</b>{{ book.edition }}<br>
+                        <b>Condition: &nbsp;</b>{{ book.get_condition_display }}<br>
+                        <b>Category: &nbsp;</b>{{ book.get_category_display }}<br><br>
+                        <b>Cost: &nbsp;</b>{{ book.cost }}
+                    </div>
+                </div>   
+            </div>
+            <div class="col-sm-3 col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Details of the seller:</h3><br>
+                        <b>Name: &nbsp;</b>{{ book.user.first_name }} {{ book.user.last_name }}<br>
+                        <b>Email: &nbsp;</b>{{ book.user.email }}<br>
+                        <b>Contact: &nbsp;</b>
+                    </div>
+                </div>   
+            </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
