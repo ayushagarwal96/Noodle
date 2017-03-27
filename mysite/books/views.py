@@ -140,4 +140,3 @@ def login_user(request):
         else:
             return render(request, 'books/login.html', {'error_message': 'Invalid login'})
     return render(request, 'books/login.html')
-
