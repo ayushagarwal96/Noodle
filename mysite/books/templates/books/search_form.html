@@ -9,7 +9,7 @@
         <div class="col-sm-12">
         </div>
             {% if books %}
-            <h1>Search results:</h1>
+            <h1>&nbsp;&nbsp;Search results:</h1>
             <br><br>
                 {% for book in books %}
                 <div class="col-sm-2 col-md-3">
@@ -33,7 +33,7 @@
                 {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
             {% endfor %}
         {% else %}
-            <h3>Sorry, didn't find any books matching your search.</h3>
+            <h3>&nbsp;&nbsp;Sorry, didn't find any books matching your search.</h3>
         {% endif %}
     </div>
 </div>
