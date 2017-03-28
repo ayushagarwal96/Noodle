@@ -93,7 +93,8 @@ def update_user(request):
 
 def delete_book(request, book_id):
     book = Book.objects.get(pk=book_id)
-    book.delete()
+    if book.user == request.user:
+        book.delete()
     books = Book.objects.filter(user=request.user)
     return render(request, 'books/index.html', {'books': books})
 
