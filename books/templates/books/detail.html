@@ -44,8 +44,28 @@
                 </div>   
             </div>
     </div>
-</div>
 
+    <h2> You may also like... </h2>
+        <hr/>
+    <div class="row">
+
+
+        {% for book in book.recommend_books %}
+
+            <div class="col-sm-3 col-md-3">
+                <a href="{% url 'books:detail' book.pk %}">
+                    {% if book.cover %}
+                        <img src="{{ book.cover.url }}" class="img-responsive center-block" style="max-height:440px">
+                    {% else %}
+                        <h3>No image to display</h3>
+                    {% endif %}
+                </a>
+            </div>
+
+        {% endfor %}
+    </div>
+
+<div>
 {% endblock %}
 
 

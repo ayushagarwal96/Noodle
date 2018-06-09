@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import Permission, User
 from django.urls import reverse
 from .choices import *
+import re, math
+from collections import Counter
+import numpy
+import numpy.linalg
+
+WORD = re.compile(r'\w+')
 
 class Book(models.Model):
     user = models.ForeignKey(User, default=1)
@@ -20,4 +26,84 @@ class Book(models.Model):
         return reverse('books:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-    	return (self.title)
+        return (self.title)
+
+    @classmethod
+    def get_cosine(cls, vec1, vec2):
+        intersection = set(vec1.keys()) & set(vec2.keys())
+        numerator = sum([vec1[x] * vec2[x] for x in intersection])
+
+        sum1 = sum([vec1[x] ** 2 for x in vec1.keys()])
+        sum2 = sum([vec2[x] ** 2 for x in vec2.keys()])
+        denominator = math.sqrt(sum1) * math.sqrt(sum2)
+
+        if not denominator:
+            return 0.0
+        else:
+            return float(numerator) / denominator
+
+    @classmethod
+    def text_to_vector(cls, text):
+        words = WORD.findall(text)
+        return Counter(words)
+
+    # text1 = 'This is a foo bar sentence .'
+    # text2 = 'This sentence is similar to a foo bar sentence .'
+    #
+    # vector1 = text_to_vector(text1)
+    # vector2 = text_to_vector(text2)
+    #
+    # cosine = get_cosine(vector1, vector2)
+
+    # print 'Cosine:', cosine
+
+    @staticmethod
+    def nearest_neighbour(self, feature_array):
+        distances_and_index = []
+        index = 0
+        for features in feature_array:
+            a = numpy.array((features[0], features[1], features[2], features[3]))
+            b = numpy.array((1.0, 1.0, 1.0, self.category))
+
+            dist = numpy.linalg.norm(a - b)
+            distances_and_index.append([dist, index])
+            index += 1
+
+            distances_and_index.sort()
+
+        # print distances_and_index
+        return  distances_and_index
+
+
+
+    def recommend_books(self):
+        other_books = Book.objects.exclude(pk=self.pk).all()
+        books = []
+        feature_array = []
+
+        for book in other_books:
+            books.append(book.__dict__)
+
+        # print books
+        for book in other_books:
+            # print book.author
+            a = Book.text_to_vector(book.author)
+            b = Book.text_to_vector(self.author)
+            f1 = Book.get_cosine(a, b)
+            a = Book.text_to_vector(book.publisher)
+            b = Book.text_to_vector(self.publisher)
+            f2 = Book.get_cosine(a, b)
+            a = Book.text_to_vector(book.sub_category)
+            b = Book.text_to_vector(self.sub_category)
+            f3 = Book.get_cosine(a, b)
+            f4 = book.category
+            feature_array.append([float(f1), float(f2), float(f3), float(book.category)])
+
+        recommended_books = Book.nearest_neighbour(self, feature_array)
+        resp = []
+        print len(recommended_books)
+        for book in recommended_books[:4]:
+            resp.append(other_books[book[1]])
+
+        return resp
+
