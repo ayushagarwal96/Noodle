@@ -18,12 +18,17 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from . import views
 from django.conf.urls.static import static
+from books.resources import BookResource
+
+book_resource = BookResource()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^books/', include('books.urls')),
     url(r'^', include('books.urls')),
+    url(r'^api/', include(book_resource.urls)),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
