@@ -19,6 +19,19 @@
                     </a>
                 </div>
             </div>
+            <div class="col-sm-12">
+            <br>
+            <a href="{% url 'books:notify' book_id=book.id%}">
+                <button type="button" class="btn btn-success">
+                    <span class="glyphicon"></span>Notify
+                    {% if book.buy_sell == 1%}
+                    Buyer
+                    {% else %}
+                    Seller
+                    {% endif %}
+                </button>
+            </a>
+	</div>
         </div>
             <div class="col-sm-9 col-md-9">
                 <div class="panel panel-default">
@@ -30,14 +43,19 @@
                         <b>Edition: &nbsp;</b>{{ book.edition }}<br>
                         <b>Condition: &nbsp;</b>{{ book.get_condition_display }}<br>
                         <b>Category: &nbsp;</b>{{ book.get_category_display }}<br><br>
-                        <b>Cost: &nbsp;</b>{{ book.cost }}
+                        <b>Cost: &nbsp;</b>{{ book.cost }}<br>
+                        <b>Buy/Sell: &nbsp;</b>{{ book.get_buy_sell_display }}
                     </div>
                 </div>   
             </div>
             <div class="col-sm-9 col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        {% if book.buy_sell == 1%}
+                        <h3>Details of the buyer:</h3><br>
+                        {% else %}
                         <h3>Details of the seller:</h3><br>
+                        {% endif %}
                         <b>Name: &nbsp;</b>{{ book.user.first_name }} {{ book.user.last_name }}<br>
                         <b>Email: &nbsp;</b>{{ book.user.email }}<br>
                     </div>

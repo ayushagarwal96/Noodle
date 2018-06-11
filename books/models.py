@@ -15,7 +15,7 @@ class Book(models.Model):
     condition = models.IntegerField(choices=CONDITION_CHOICES, default=1)
     edition = models.CharField(max_length=30, blank=True)
     cost = models.IntegerField()
-    # seller = models.ForeignKey(User)
+    buy_sell = models.IntegerField(choices=BUY_SELL_ENUM, default=1)
 
     def get_absolute_url(self):
         return reverse('books:detail', kwargs={'pk': self.pk})
