@@ -12,7 +12,7 @@ import sendgrid
 import os
 from sendgrid.helpers.mail import *
 import datetime
-
+import smtplib
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
@@ -152,20 +152,19 @@ def login_user(request):
 
 def send_email(request, book_id):
     book = Book.objects.get(pk=book_id)
-    sg = sendgrid.SendGridAPIClient(apikey="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")
-    from_email = Email("test@example.com")
-    to_email = Email(str(book.user.email))
+    to_email = str(book.user.email)
 
     if book.buy_sell == 1:
         subject = "Seller for Book: " + book.title
-        content = Content("Hey "+str(book.user.email)+",\n\nYour requested book: "+book.title+" is being sold by: "+request.user.email+".")
+        message = ("Hey "+str(book.user.email)+",\n\nYour requested book: "+book.title+" is being sold by: "+request.user.email+".")
     else:
         subject = "Buyer for Book: " + book.title
-        content = Content("Hey "+str(book.user.email)+",\n\nYour book: "+book.title+" is being requested by: "+request.user.email+".")
+        message = ("Hey "+str(book.user.email)+",\n\nYour book: "+book.title+" is being requested by: "+request.user.email+".")
 
-    mail = Mail(from_email, subject, to_email, content)
-    print mail.get()
-    response = sg.client.mail.send.post(request_body=mail.get())
-    print(response.status_code)
-    print(response.body)
-    print(response.headers)
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login("noodleportal819@gmail.com", "Petarox14")
+    s.sendmail("noodleportal819@gmail.com", to_email, message)
+    s.quit()
+
+    return render(request, 'books/index.html')
