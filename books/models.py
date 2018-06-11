@@ -21,4 +21,4 @@ class Book(models.Model):
         return reverse('books:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return self.title
+        return (self.title)
