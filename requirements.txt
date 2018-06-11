@@ -3,4 +3,5 @@ djangorestframework==3.8.2
 pkg-resources==0.0.0
 python-http-client==3.1.0
 pytz==2018.4
+tastypie
 sendgrid==5.4.0

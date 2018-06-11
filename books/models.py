@@ -3,6 +3,7 @@ from django.contrib.auth.models import Permission, User
 from django.urls import reverse
 from .choices import *
 
+
 class Book(models.Model):
     user = models.ForeignKey(User, default=1)
     title = models.CharField(max_length=100)
@@ -20,4 +21,4 @@ class Book(models.Model):
         return reverse('books:detail', kwargs={'pk': self.pk})
 
     def __str__(self):
-    	return (self.title)
+        return (self.title)
