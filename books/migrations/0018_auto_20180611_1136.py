@@ -16,10 +16,5 @@ class Migration(migrations.Migration):
             model_name='book',
             name='buy_sell',
             field=models.IntegerField(choices=[(1, b'Buy'), (2, b'Sell')], default=1),
-        ),
-        migrations.AlterField(
-            model_name='book',
-            name='category',
-            field=models.IntegerField(choices=[(1, b'Biology'), (2, b'Chemical'), (3, b'Chemistry'), (4, b'Computer Science'), (5, b'Economics'), (6, b'EEE'), (7, b'ENI'), (8, b'Maths'), (9, b'Mechanical'), (10, b'Physics'), (11, b'Fiction'), (12, b'Non-Fiction'), (13, b'Others')], default=1),
-        ),
+        )
     ]

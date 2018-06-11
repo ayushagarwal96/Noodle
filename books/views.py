@@ -8,9 +8,7 @@ from django.views.generic import View
 from books.models import Book
 from .forms import UserForm, BookForm, UpdateUserForm
 from django.db.models import Q
-import sendgrid
 import os
-from sendgrid.helpers.mail import *
 import datetime
 import smtplib
 

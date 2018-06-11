@@ -83,7 +83,7 @@ class IntegrationClient(object):
     def push_data_to_predix(self):
         self.get_predix_uaa_token()
         headers = {
-            'Predix-Zone-Id': "972f6020-1836-49cc-805f-8344bf998f53",
+            'Predix-Zone-Id': "",  # 972f6020-1836-49cc-805f-8344bf998f53
             'Authorization': self.predix_auth_head_token,
             'Content-Type': 'application/json'
         }
