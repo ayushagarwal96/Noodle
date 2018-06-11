@@ -19,6 +19,19 @@
                     </a>
                 </div>
             </div>
+            <div class="col-sm-12">
+            <br>
+            <a href="{% url 'books:notify' book_id=book.id%}">
+                <button type="button" class="btn btn-success">
+                    <span class="glyphicon"></span>Notify
+                    {% if book.buy_sell == 1%}
+                    Buyer
+                    {% else %}
+                    Seller
+                    {% endif %}
+                </button>
+            </a>
+	</div>
         </div>
             <div class="col-sm-9 col-md-9">
                 <div class="panel panel-default">

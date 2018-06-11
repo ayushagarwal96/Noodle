@@ -65,6 +65,7 @@ def create_book(request):
         }
         return render(request, 'books/book_form.html', context)
 
+
 class BookUpdate(UpdateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'edition', 'condition', 'cost', 'category', 'cover']
@@ -102,6 +103,7 @@ def delete_book(request, book_id):
     books = Book.objects.filter(user=request.user)
     return render(request, 'books/index.html', {'books': books})
 
+
 def register(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
@@ -120,6 +122,7 @@ def register(request):
         "form": form,
     }
     return render(request, 'books/user_form.html', context)
+
 
 def logout_user(request):
     logout(request)
@@ -147,13 +150,21 @@ def login_user(request):
     return render(request, 'books/login.html')
 
 
-def send_email(request):
+def send_email(request, book_id):
+    book = Book.objects.get(pk=book_id)
     sg = sendgrid.SendGridAPIClient(apikey="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")
     from_email = Email("test@example.com")
-    to_email = Email("test@example.com")
-    subject = "Sending with SendGrid is Fun"
-    content = Content("text/plain", "and easy to do anywhere, even with Python")
+    to_email = Email(str(book.user.email))
+
+    if book.buy_sell == 1:
+        subject = "Seller for Book: " + book.title
+        content = Content("Hey "+str(book.user.email)+",\n\nYour requested book: "+book.title+" is being sold by: "+request.user.email+".")
+    else:
+        subject = "Buyer for Book: " + book.title
+        content = Content("Hey "+str(book.user.email)+",\n\nYour book: "+book.title+" is being requested by: "+request.user.email+".")
+
     mail = Mail(from_email, subject, to_email, content)
+    print mail.get()
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
     print(response.body)
