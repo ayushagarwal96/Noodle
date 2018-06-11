@@ -2,3 +2,6 @@ Django==1.11.13
 djangorestframework==3.8.2
 pytz==2018.4
 tastypie
+websocket-client
+requests
+python-dateutil
