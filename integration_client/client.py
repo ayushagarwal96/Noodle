@@ -88,9 +88,9 @@ class IntegrationClient(object):
             'Content-Type': 'application/json'
         }
 
-        print("Connecting to wss://gateway-predix-data-services.run.aws-usw02-pr.ice.predix.io/v1/stream/message")
+        print("Connecting to wss://gateway-predix-data-services.run.aws-usw02-pr.ice.predix.io/v1/stream/messages")
         try:
-            ws = websocket.create_connection("wss://gateway-predix-data-services.run.aws-usw02-pr.ice.predix.io/v1/stream/message", header=headers)
+            ws = websocket.create_connection("wss://gateway-predix-data-services.run.aws-usw02-pr.ice.predix.io/v1/stream/messages", header=headers)
         except websocket._exceptions.WebSocketBadStatusException as err:
             print('Error has occured while connecting to timeseries server. Error code: ',
                   err.status_code)
@@ -100,7 +100,8 @@ class IntegrationClient(object):
         utc_time = datetime.utcnow().replace(tzinfo=None)
         dt = datetime(1970, 1, 1).replace(tzinfo=None)
         epoch_time = (utc_time - dt).total_seconds()
-        ws.send(json.dumps(self.create_ingest_body(self.data['title'], epoch_time, self.data['cost'])))
+        for r in self.res:
+            ws.send(json.dumps(self.create_ingest_body(r['title'], epoch_time, r['cost'])))
         result = ws.recv()
         print (result)
         ws.close()
