@@ -6,7 +6,7 @@ CONDITION_CHOICES = (
     (3, _("Old")),
 )
 CATEGORY_CHOICES = (
-    (1, _("Biolgy")),
+    (1, _("Biology")),
     (2, _("Chemical")),
     (3, _("Chemistry")),
     (4, _("Computer Science")),
@@ -19,4 +19,8 @@ CATEGORY_CHOICES = (
     (11, _("Fiction")),
     (12, _("Non-Fiction")),
     (13, _("Others")),
+)
+BUY_SELL_ENUM = (
+    (1, _("Buy")),
+    (2, _("Sell")),
 )
