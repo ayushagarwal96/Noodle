@@ -51,6 +51,11 @@
             	</form>
 
 				<ul class="nav navbar-nav navbar-right">
+                    <li class="">
+						<a href="{% url 'books:charts' %}">
+							<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>&nbsp;Charts
+						</a>
+					</li>
 					<li class="">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<u>{{ request.user.username }}</u><span class="caret"></span></a>
 				        <ul class="dropdown-menu">
@@ -75,5 +80,6 @@
 	</nav>
 {% block body %}
 {% endblock %}
+
 </body>
 </html>

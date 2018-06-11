@@ -6,14 +6,22 @@
 
 {% block body %}
 <body>
-    <style>
+    <div align="center">
+        <h2>
+            Book Sales vs Year
+        </h2>
+    </div>
+
+<style>
 
 svg {
   font: 10px sans-serif;
+    margin-left: 25%;
+    margin-right: 15%;
 }
 
 .area {
-  fill: #B4B4B4;
+  fill: #3e49c3;
   opacity: 100%;
   clip-path: url(#clip);
 }
@@ -99,17 +107,34 @@ d3.csv("/media/totaltopics.csv", type, function(error, data) {
   x.domain(d3.extent(data.map(function(d) { return d.date; })))
   y.domain([0, d3.max(data.map(function(d) { return d.caseid; }))]);
   x2.domain(x.domain());
-  y2.domain(y.domain());;
+  y2.domain(y.domain());
 
     focus.append("path")
       .datum(data)
       .attr("class", "area")
       .attr("d", area);
 
+    focus.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Book Sales");
+
+
   focus.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+    .append("text")
+      .attr("transform", "translate(" + (width - 15) + "," + -10 + ")")
+      .attr("x", 6)
+      .attr("dx", ".71em")
+      .style("text-anchor", "end")
+      .text("Year");;
 
   focus.append("g")
       .attr("class", "y axis")
