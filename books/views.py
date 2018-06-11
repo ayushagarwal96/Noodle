@@ -8,6 +8,10 @@ from django.views.generic import View
 from books.models import Book
 from .forms import UserForm, BookForm, UpdateUserForm
 from django.db.models import Q
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+import datetime
 
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -141,3 +145,16 @@ def login_user(request):
         else:
             return render(request, 'books/login.html', {'error_message': 'Invalid login'})
     return render(request, 'books/login.html')
+
+
+def send_email(request):
+    sg = sendgrid.SendGridAPIClient(apikey="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")
+    from_email = Email("test@example.com")
+    to_email = Email("test@example.com")
+    subject = "Sending with SendGrid is Fun"
+    content = Content("text/plain", "and easy to do anywhere, even with Python")
+    mail = Mail(from_email, subject, to_email, content)
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
