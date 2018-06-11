@@ -16,10 +16,11 @@ class Book(models.Model):
     publisher = models.CharField(max_length=100)
     category = models.IntegerField(choices=CATEGORY_CHOICES, default=1)
     sub_category = models.CharField(max_length=30, blank=True)
-    cover = models.FileField()
+    cover = models.FileField(blank=True)
+    image_url = models.CharField(max_length=300, blank=True)
     condition = models.IntegerField(choices=CONDITION_CHOICES, default=1)
     edition = models.CharField(max_length=30, blank=True)
-    cost = models.IntegerField()
+    cost = models.IntegerField(default=200)
     # seller = models.ForeignKey(User)
 
     def get_absolute_url(self):
@@ -47,16 +48,6 @@ class Book(models.Model):
         words = WORD.findall(text)
         return Counter(words)
 
-    # text1 = 'This is a foo bar sentence .'
-    # text2 = 'This sentence is similar to a foo bar sentence .'
-    #
-    # vector1 = text_to_vector(text1)
-    # vector2 = text_to_vector(text2)
-    #
-    # cosine = get_cosine(vector1, vector2)
-
-    # print 'Cosine:', cosine
-
     @staticmethod
     def nearest_neighbour(self, feature_array):
         distances_and_index = []
@@ -71,10 +62,7 @@ class Book(models.Model):
 
             distances_and_index.sort()
 
-        # print distances_and_index
         return  distances_and_index
-
-
 
     def recommend_books(self):
         other_books = Book.objects.exclude(pk=self.pk).all()
@@ -84,9 +72,7 @@ class Book(models.Model):
         for book in other_books:
             books.append(book.__dict__)
 
-        # print books
         for book in other_books:
-            # print book.author
             a = Book.text_to_vector(book.author)
             b = Book.text_to_vector(self.author)
             f1 = Book.get_cosine(a, b)

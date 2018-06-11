@@ -13,6 +13,10 @@ from django.db.models import Q
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
+def charts(request):
+        return render(request, 'books/charts.html')
+
+
 def index(request):
     if not request.user.is_authenticated():
         return render(request, 'books/login.html')

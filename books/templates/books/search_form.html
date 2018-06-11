@@ -12,26 +12,29 @@
             <h1>&nbsp;&nbsp;Search results:</h1>
             <br><br>
                 {% for book in books %}
-                <div class="col-sm-2 col-md-3">
-                    <center>
-                        <div class="thumbnail">
-                            <a href="{% url 'books:detail' book.id %}">
-                                <img src="{{ book.cover.url }}" class="img-responsive center-block" style="max-height:220px">
-                            </a>
-                            <div class="caption">
-                                <h4>{{ book.title }}</h4>
-                                <h6>by {{ book.author }}</h6>
-                                <h6>INR {{ book.cost }}</h6>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <a href="{% url 'books:detail' book.id %}">
+                            {% if book.cover %}
+                                <img src="{{ book.cover.url }}" class="img-responsive center-block" style="height:400px">
+                            {% elif book.image_url %}
+                                <img src="{{ book.image_url }}" class="img-responsive center-block" style="height:400px">
+                            {% else %}
+                                <h3>No image to display</h3>
+                            {% endif %}
+                        </a>
+                        <div class="caption">
+                            <div style="height: 30px; text-overflow: ellipsis; overflow-y: hidden;"><h4>{{ book.title }}</h4></div>
+                            <h6>by {{ book.author }}</h6>
+                            <h6>INR {{ book.cost }}</h6>
 
-                                <!-- View Details -->
-                                <a href="{% url 'books:detail' book.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <!-- View Details -->
+                            <a href="{% url 'books:detail' book.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
-                            </div>
                         </div>
-                    </center>
+                    </div>
                 </div>
-                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
-            {% endfor %}
+                {% endfor %}
         {% else %}
             <h3>&nbsp;&nbsp;Sorry, didn't find any books matching your search.</h3>
         {% endif %}
