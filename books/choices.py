@@ -36,7 +36,9 @@ CATEGORY_CHOICES = (
     (27, _("Teen & Young Adult")),
     (28, _("Test Preparation")),
     (29, _("Travel")),
+)
 
-
-
+BUY_SELL_ENUM = (
+    (1, _("Buy")),
+    (2, _("Sell")),
 )

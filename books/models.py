@@ -9,6 +9,7 @@ import numpy.linalg
 
 WORD = re.compile(r'\w+')
 
+
 class Book(models.Model):
     user = models.ForeignKey(User, default=1)
     title = models.CharField(max_length=100)
@@ -22,6 +23,8 @@ class Book(models.Model):
     edition = models.CharField(max_length=30, blank=True)
     cost = models.IntegerField(default=200)
     # seller = models.ForeignKey(User)
+    cost = models.IntegerField()
+    buy_sell = models.IntegerField(choices=BUY_SELL_ENUM, default=1)
 
     def get_absolute_url(self):
         return reverse('books:detail', kwargs={'pk': self.pk})
@@ -92,4 +95,3 @@ class Book(models.Model):
             resp.append(other_books[book[1]])
 
         return resp
-
