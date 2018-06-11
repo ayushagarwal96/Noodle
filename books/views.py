@@ -8,6 +8,10 @@ from django.views.generic import View
 from books.models import Book
 from .forms import UserForm, BookForm, UpdateUserForm
 from django.db.models import Q
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+import datetime
 
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -61,6 +65,7 @@ def create_book(request):
         }
         return render(request, 'books/book_form.html', context)
 
+
 class BookUpdate(UpdateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'edition', 'condition', 'cost', 'category', 'cover']
@@ -98,6 +103,7 @@ def delete_book(request, book_id):
     books = Book.objects.filter(user=request.user)
     return render(request, 'books/index.html', {'books': books})
 
+
 def register(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
@@ -116,6 +122,7 @@ def register(request):
         "form": form,
     }
     return render(request, 'books/user_form.html', context)
+
 
 def logout_user(request):
     logout(request)
@@ -141,3 +148,24 @@ def login_user(request):
         else:
             return render(request, 'books/login.html', {'error_message': 'Invalid login'})
     return render(request, 'books/login.html')
+
+
+def send_email(request, book_id):
+    book = Book.objects.get(pk=book_id)
+    sg = sendgrid.SendGridAPIClient(apikey="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")
+    from_email = Email("test@example.com")
+    to_email = Email(str(book.user.email))
+
+    if book.buy_sell == 1:
+        subject = "Seller for Book: " + book.title
+        content = Content("Hey "+str(book.user.email)+",\n\nYour requested book: "+book.title+" is being sold by: "+request.user.email+".")
+    else:
+        subject = "Buyer for Book: " + book.title
+        content = Content("Hey "+str(book.user.email)+",\n\nYour book: "+book.title+" is being requested by: "+request.user.email+".")
+
+    mail = Mail(from_email, subject, to_email, content)
+    print mail.get()
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)

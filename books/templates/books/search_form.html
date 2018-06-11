@@ -2,17 +2,17 @@
 
 {% block body %}
 
-<div class="books-container container-fluid">
+<div class="books-container container-fluid col-sm-6">
 
     <!-- Books -->
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
         </div>
-            {% if books %}
-            <h1>&nbsp;&nbsp;Search results:</h1>
+            <h1>&nbsp;&nbsp;Buy Orders:</h1>
             <br><br>
-                {% for book in books %}
-                <div class="col-sm-2 col-md-3">
+            {% for book in books %}
+                {% if book.buy_sell == 1 %}
+                <div class="col-sm-6 col-md-6">
                     <center>
                         <div class="thumbnail">
                             <a href="{% url 'books:detail' book.id %}">
@@ -30,11 +30,43 @@
                         </div>
                     </center>
                 </div>
-                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
-            {% endfor %}
-        {% else %}
-            <h3>&nbsp;&nbsp;Sorry, didn't find any books matching your search.</h3>
-        {% endif %}
+                {% endif %}
+            {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="books-container container-fluid col-sm-6">
+
+    <!-- Books -->
+    <div class="row">
+        <div class="col-sm-6">
+        </div>
+            <h1>&nbsp;&nbsp;Sell Orders:</h1>
+            <br><br>
+            {% for book in books %}
+        	    {% if book.buy_sell == 2 %}
+                <div class="col-sm-6 col-md-6">
+                    <center>
+                        <div class="thumbnail">
+                            <a href="{% url 'books:detail' book.id %}">
+                                <img src="{{ book.cover.url }}" class="img-responsive center-block" style="max-height:220px">
+                            </a>
+                            <div class="caption">
+                                <h4>{{ book.title }}</h4>
+                                <h6>by {{ book.author }}</h6>
+                                <h6>INR {{ book.cost }}</h6>
+
+                                <!-- View Details -->
+                                <a href="{% url 'books:detail' book.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                {% endif %}
+            {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+        {% endfor %}
     </div>
 </div>
 
