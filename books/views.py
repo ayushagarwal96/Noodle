@@ -165,7 +165,7 @@ def send_email(request, book_id):
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.starttls()
-    s.login("noodleportal819@gmail.com", "Petarox14")
+    s.login("noodleportal819@gmail.com", "")  # enter password
     s.sendmail("noodleportal819@gmail.com", to_email, message)
     s.quit()
 

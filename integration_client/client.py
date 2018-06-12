@@ -56,7 +56,7 @@ class IntegrationClient(object):
         payload = {
             'grant_type': 'client_credentials',
             'client_id': 'test_client',
-            'client_secret': 'Petarox14',
+            'client_secret': '',  # Enter password
             'response_type': 'token'
         }
         r = requests.post("https://09365f33-e0f9-437d-b45d-8d234c3ca554.predix-uaa.run.aws-usw02-pr.ice.predix.io/oauth/token", data=payload)
