@@ -1,0 +1,7 @@
+The Application can be run by the following steps:
+
+1) Run the requirements file in you virtual environment to install the required dependencies.
+   pip install -r requirements.txt
+   
+2) Run the following python command to get the server up and running.
+   python manage.py runserver 
